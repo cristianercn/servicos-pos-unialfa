@@ -4,7 +4,7 @@
 
 <div fxLayout="row" fxLayoutAlign="center start" class="app-content">
   <div fxFlex="1024px">
-    <mat-tab-group>
+    <mat-tab-group [style.display]="_tarefaSelecionada == null ? 'block': 'none' ">
       <mat-tab label="Usuários">
 
         <div class="app-tab-content">
@@ -29,9 +29,14 @@
         
       </mat-tab>
 
+     
+    </mat-tab-group>
+    <mat-tab-group [style.display]="_tarefaSelecionada != null ? 'block': 'none' " >
+     
+
       <mat-tab label="Comentario">
 
-        <div class="app-tab-content" [style.display]="_tarefaSelecionada != null ? 'block': 'none' " >
+        <div class="app-tab-content" >
           <app-comentario [tarefaSelecionada]="_tarefaSelecionada" (tarefaSelecionadaChanged)="_tarefaSelecionada=$event"></app-comentario>
         </div>
         
