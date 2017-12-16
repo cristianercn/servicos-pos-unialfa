@@ -1,57 +1,50 @@
 <form [formGroup]="_outerForm" (ngSubmit)="_grava()" #f="ngForm">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Adicionar Comentario</mat-card-title>
-            
+            <mat-card-title><h3>Adicionar Comentario</h3></mat-card-title>            
         </mat-card-header>
         <mat-card-content>
             <div fxLayout="column" fxLayoutAlign="start top" fxLayoutGap="10px">
-                <mat-select placeholder="Usuario" formControlName="usuario" name="item">
-                    <mat-option *ngFor="let item of tarefaSelecionada.usuarios" [value]="item">
-                        {{item.nome}}
-                    </mat-option>
-                </mat-select>
                 <mat-form-field>
-                    <textarea matInput type="text" placeholder="Comentar" formControlName="corpo" autocomplete="off"
+                    <mat-select placeholder="Selecione o Usuario" formControlName="usuario" name="item">
+                        <mat-option *ngFor="let item of tarefaSelecionada.usuarios" [value]="item">
+                            {{item.nome}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <textarea matInput type="text" placeholder="Digite o Comentario" formControlName="corpo" autocomplete="off"
                     rows="3" class="full-width"></textarea>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput [matDatepicker]="datapicker" formControlName="data" placeholder="Data" class="full-width">
+                    <input matInput [matDatepicker]="datapicker" formControlName="data" placeholder="Data do Comentario" class="full-width">
                     <mat-datepicker-toggle matSuffix [for]="datapicker"></mat-datepicker-toggle>
                     <mat-datepicker #datapicker></mat-datepicker>
                 </mat-form-field>
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-button type="button" (click)="_limpa()">Limpar</button>
-            <button mat-button type="submit" >Adicionar</button>
-            <button mat-button type="button" (click)="_voltar()" >Voltar</button>
+            <button mat-raised-button type="button" (click)="_limpa()">Limpar</button>
+            <button mat-raised-button type="submit" >Salvar</button>
+            <button mat-raised-button (click)="_voltar()" >Voltar</button>
         </mat-card-actions>
     </mat-card>
 </form>
-<!--
-<<mat-table #table [dataSource]="dataSource">
-    <ng-container cdkColumnDef="column">
-        <mat-header-cell *cdkHeaderCellDef> header </mat-header-cell>
-        <mat-cell *cdkCellDef="let row"> {{row.column}} </mat-cell>
-    </ng-container>
-    <ng-container cdkColumnDef="column">
-            <mat-header-cell *cdkHeaderCellDef> header </mat-header-cell>
-            <mat-cell> {{row.column}} </mat-cell>
-        </ng-container>
-</mat-table>
--->
-<mat-list>
-    <mat-list-item *ngFor="let item of _comentarios">
-        <h3>{{ item.usuario.nome }}</h3><br>
-        <p>{{ item.corpo }}</p><br>
-        <p>{{ item.data }}</p>
-        <button mat-button (click)="_editar(item)">
-            Editar
-        </button>
+<div class="app-divider"></div>
+<mat-card *ngFor="let item of _comentarios" [style.margin]="'10px'">
+    <mat-card-header>
+        <mat-card-title>Usuario {{ item.usuario.nome }}  diz: (as {{ item.data | date:"fullDate"}} )</mat-card-title>       
+    </mat-card-header>
+    <mat-card-content>
+            <p>{{ item.corpo }}</p>       
+    </mat-card-content>
 
-        <button mat-button (click)="_remover(item.id)">
-            Remover
+    <mat-card-actions>
+        <button mat-icon-button mat-button (click)="_editar(item)">
+            <mat-icon>edit</mat-icon>
         </button>
-    </mat-list-item>
-</mat-list>        
+        <button mat-button (click)="_remover(item.id)">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </mat-card-actions>
+</mat-card>
